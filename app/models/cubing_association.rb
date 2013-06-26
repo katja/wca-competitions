@@ -1,3 +1,5 @@
+class CompetitionNotFound < Exception; end
+
 class CubingAssociation
   attr_accessor :name
   attr_writer :competition_builder
@@ -11,6 +13,12 @@ class CubingAssociation
     competition_builder.call(attributes).tap do |c|
       c.cubing_association = self
     end
+  end
+
+  def get_competition id
+    competition = competitions.find { |c| c.to_param == id }
+    raise CompetitionNotFound if competition.nil?
+    competition
   end
 
   def competitions

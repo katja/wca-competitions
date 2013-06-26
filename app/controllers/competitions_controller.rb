@@ -4,6 +4,10 @@ class CompetitionsController < ApplicationController
     @competitions = wca.competitions
   end
 
+  def show
+    @competition = wca.get_competition params[:id]
+  end
+
   def new
     @competition = wca.new_competition
   end

@@ -4,7 +4,7 @@ class Competition
   extend ActiveModel::Naming
   include ActiveModel::Conversion
 
-  attr_accessor :cubing_association, :name
+  attr_accessor :cubing_association, :name, :date, :location
 
   def initialize(attributes = {})
     attributes.each do |key, value|
@@ -18,5 +18,9 @@ class Competition
 
   def persisted?
     false
+  end
+
+  def to_param
+    name.downcase.gsub(" ", "-") if name
   end
 end

@@ -48,4 +48,25 @@ describe CubingAssociation do
       expect(subject.competitions).to eq [competition]
     end
   end
+
+  describe "#get_competition" do
+    let(:competition_1) { stub(:competition, to_param: "go-2013") }
+    let(:competition_2) { stub(:competition, to_param: "he-2011") }
+    let(:competition_3) { stub(:competition, to_param: "it-2014") }
+    before { subject.add_competition(competition_1); subject.add_competition(competition_2); subject.add_competition(competition_3) }
+
+    context "when competition can't be found" do
+      it "raises a CompetitionNotFound exception" do
+        expect {
+          subject.get_competition("it-2015")
+        }.to raise_error(CompetitionNotFound)
+      end
+    end
+
+    context "when competition can be found" do
+      it "returns the competition" do
+        expect(subject.get_competition("he-2011")).to eq(competition_2)
+      end
+    end
+  end
 end
